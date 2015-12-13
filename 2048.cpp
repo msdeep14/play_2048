@@ -34,6 +34,7 @@ class play
 	void end_display();
 	void win_display();
 	void lose_display();
+	void restart();
 };
 
 void play :: instructions()
@@ -60,6 +61,20 @@ void play :: lose_display()
 	cout<<"Thanks for trying!!!\n\n";
 	cout<<"\t\t\tA msdeep14 CREATION\n\n";
 	exit(0);
+}
+
+void play :: restart()
+{
+	char ch;
+	cout<<"\nAre you sure to restart the game??\n\n";
+	cout<<"enter y to restart and n to continue.\n\n";
+	cin>>ch;
+	if(ch=='y')
+	{
+		score=0;
+		undo_score=0;
+		initialize();
+	}
 }
 
 int play :: check_full()
@@ -89,7 +104,7 @@ void play :: win_display()
 	cin>>ch;
 	if(ch=='n')
 	{
-		end_display(); 
+		end_display();
 	}
 }
 
@@ -380,7 +395,7 @@ void play :: play_game()
 	cin>>choice;
 
 
-	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u'))
+	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u' || choice=='r'))
 	{
 		//make copy
 		if(choice!='u')
@@ -443,6 +458,9 @@ void play :: play_game()
 		case 'i':
 			instructions();
 			break;
+		case 'r':
+			restart();
+			break;
 		case 'u':
 			if(undo_flag<5)
 			{
@@ -480,7 +498,7 @@ void play :: play_game()
 		}
 		cout<<"enter choice: "<<endl;
 		cin>>choice;
-		while(choice!='w'  && choice!='s'  && choice!='d'  && choice!='a' && choice!='q' && choice!='i' && choice!='u')
+		while(choice!='w'  && choice!='s'  && choice!='d'  && choice!='a' && choice!='q' && choice!='i' && choice!='u' && choice!='r')
 		{
 			cout<<"\nYou had entered the wrong choice!\nPlease enter correct choice to continue!"<<endl;
 			cin>>choice;
@@ -505,7 +523,7 @@ void play :: display()
 		cout<<endl<<endl<<endl;
 	}
 	cout<<"\n\n\n";
-	cout<<"\tw\t\t\t\t^\t\t\t\ti-instructions\na\ts\td\t\t<\t"<<"v"<<"\t>\t\t\tq-quit  u-undo\n\n";
+	cout<<"\t\t\t\t\t\t\t\t\tr-restart\n\tw\t\t\t\t^\t\t\t\ti-instructions\na\ts\td\t\t<\t"<<"v"<<"\t>\t\t\tq-quit  u-undo\n\n";
 }
 
 int main()
