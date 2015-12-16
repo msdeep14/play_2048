@@ -13,10 +13,8 @@ class play
 {
 	int g[4][4];
 	int g_copy[4][4];
-	public:
 	void initialize();
 	void display();
-	void play_game();
 	void move_up();
 	void move_down();
 	void move_left();
@@ -35,6 +33,8 @@ class play
 	void win_display();
 	void lose_display();
 	void restart();
+	public:
+	void play_game();
 };
 
 void play :: instructions()
@@ -533,4 +533,3 @@ int main()
 	p.play_game();
 	return 0;
 }
-
