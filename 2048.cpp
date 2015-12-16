@@ -484,7 +484,7 @@ void play :: play_game()
 			}
 	}
 	int find_max=calculate_max();
-	if(find_max==1024)
+	if(find_max==2048)
 	{
 		win_display();
 	}
