@@ -5,6 +5,7 @@
 #include<cstdio>
 #include<cstdlib>
 #include<ctime>
+#include<iomanip>
 using namespace std;
 int score=0;
 int undo_flag=0;
@@ -518,7 +519,7 @@ void play :: display()
 		cout<<"                       ";
 		for(int j=0;j<4;j++)
 		{
-			cout<<"|  "<<g[i][j]<<"    ";
+			cout<<setw(8)<<g[i][j]<<setw(8)<<"|"<<setw(8);
 		}
 		cout<<endl<<endl<<endl;
 	}
