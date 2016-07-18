@@ -1,12 +1,11 @@
 # play_2048
-android game 2048
+It is implementation of the popular game-2048 in C++.
 
-For playing this game, you are just required to run in terminal with g++ installed.
+For enjoying the game,you just need to run the program on terminal.
 
-check instructions options for How to play the game.
+Check instructions options for How to play the game.
 
 Suggest improvements in code if you find any :)
 
-Thank you
 
 
