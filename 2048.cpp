@@ -1,5 +1,12 @@
-//play_2024
-//mandeep singh @msdeep14
+/*
+	* play_2024
+	* author - mandeep singh
+	* copyright 2017 All rights reserved under
+		GNU GENERAL PUBLIC LICENSE
+	    Version 2, June 1991
+	
+*/
+
 #include<iostream>
 #include<cstring>
 #include<cstdio>
