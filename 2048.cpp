@@ -4,7 +4,7 @@
 	* copyright 2017 All rights reserved under
 		GNU GENERAL PUBLIC LICENSE
 	    Version 2, June 1991
-	
+
 */
 
 #include<iostream>
@@ -222,8 +222,8 @@ void play :: move_down(){
             }
         }
     }
-
 }
+
 void play :: move_left(){
 	for(int i=0;i<4;i++){
 		for(int j=0;j<4;j++){
@@ -254,7 +254,6 @@ void play :: move_right(){
 			}
 		}
 	}
-
 }
 
 void play :: sum_up(){
