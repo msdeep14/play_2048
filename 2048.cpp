@@ -14,8 +14,12 @@
 #include<ctime>
 #include<iomanip>
 using namespace std;
+//total score
 int score=0;
+//to set max limit on no. of times undo can be performed
 int undo_flag=0;
+//variable which stores score made in previous move, used to reduce the total score
+//in case undo choice is selected
 int undo_score=0;
 class play{
 	int g[4][4];
@@ -175,6 +179,10 @@ void play :: generate_new_index(){
 	}
 }
 
+/*
+	* initialize the matrices g and g_copy
+	* two of the indices to value = 2 and other values to 0
+*/
 void play :: initialize(){
 	for(int i=0;i<4;i++){
 		for(int j=0;j<4;j++){
@@ -308,6 +316,10 @@ void play :: sum_right(){
 	}
 }
 
+/*
+	* function to take choice from user
+	* and call functions accordingly
+*/
 void play :: play_game(){
 	int flag=0;
 	char choice,ch;
@@ -315,7 +327,7 @@ void play :: play_game(){
 	cin>>choice;
 
 	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u' || choice=='r')){
-		//make copy
+		//make copy of previous move before updating the current matrix to g_copy
 		if(choice!='u'){
 			for(int m=0;m<4;m++){
 				for(int n=0;n<4;n++){
@@ -324,6 +336,7 @@ void play :: play_game(){
 			}
 		}
 	switch(choice){
+		//move up
 		case 'w':
 			undo_score=0;
 			move_up();
@@ -333,6 +346,7 @@ void play :: play_game(){
 			system("clear");
 			display();
 			break;
+		//move down
 		case 's':
 			undo_score=0;
 			move_down();
@@ -342,6 +356,7 @@ void play :: play_game(){
 			system("clear");
 			display();
 			break;
+		//move left
 		case 'a':
 			undo_score=0;
 			move_left();
@@ -351,6 +366,7 @@ void play :: play_game(){
 			system("clear");
 			display();
 			break;
+		//move right
 		case 'd':
 			undo_score=0;
 			move_right();
@@ -360,6 +376,7 @@ void play :: play_game(){
 			system("clear");
 			display();
 			break;
+		//quit
 		case 'q':
 			cout<<"Are you sure you want to quit??\nEnter y to quit and n to continue!\n"<<endl;
 			cin>>ch;
@@ -368,12 +385,15 @@ void play :: play_game(){
 			}
 			display();
 			break;
+		//display instructions
 		case 'i':
 			instructions();
 			break;
+		//restart 2048
 		case 'r':
 			restart();
 			break;
+		//undo move
 		case 'u':
 			if(undo_flag<5){
 				for(int m=0;m<4;m++){
@@ -391,6 +411,7 @@ void play :: play_game(){
 				cout<<"\n\nYou cannot undo the matrix more than 5 times.\n\nSorry!!!\n"<<endl;
 			}
 	}
+	//check if any block of matrix reached to value = 2048
 	int find_max=calculate_max();
 	if(find_max==2048){
 		win_display();
@@ -409,7 +430,10 @@ void play :: play_game(){
 	}
 }
 
-
+/*
+	* display function
+	* called after every move
+*/
 void play :: display(){
 	cout<<"\n\t\t\t\t\t\t\t 2048\n\n";
 	cout<<"\t\t\t\t\t\t  A msdeep14 CREATION\n\n";
