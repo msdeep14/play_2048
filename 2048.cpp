@@ -416,6 +416,13 @@ void play :: play_game(){
 	if(find_max==2048){
 		win_display();
 	}
+	/*
+		* check_full() checks if grid is full
+		* game_ends() perform a check if continuous block in up-down or
+		  right-left direction has same values
+		* if no continuous block has same value, then no further move can be made
+		  and game ends
+	*/
 		if(check_full()){
 			if(game_ends()){
 				lose_display();
