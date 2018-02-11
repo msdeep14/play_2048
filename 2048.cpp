@@ -13,15 +13,24 @@
 #include<cstdlib>
 #include<ctime>
 #include<iomanip>
+
+#include <stack>
+#include <vector>
+
 using namespace std;
+
 //total score
 int score=0;
 //to set max limit on no. of times undo can be performed
-int undo_flag=0;
+int undo_limit=0;
 //variable which stores score made in previous move, used to reduce the total score
 //in case undo choice is selected
 int undo_score=0;
 class play{
+	stack<vector<vector<int> > > undo_stack;
+	stack<int> score_stack;
+
+
 	int g[4][4];
 	int g_copy[4][4];
 	void initialize();
@@ -44,15 +53,21 @@ class play{
 	void win_display();
 	void lose_display();
 	void restart();
+
 	public:
 	void play_game();
+	play(){
+		// intialize undo stack
+
+	}
 };
 
 void play :: instructions(){
 	cout<<"\nInstructions for playing 2048 are:: \n"<<endl;
 	cout<<"For moving tiles enter \nw-move up/na-move left\nd-move right\ns-move down\n"<<endl;
 	cout<<"When two tiles with same number touch, they merge into one. \nWhen 2048 is created, the player wins!\n"<<endl;
-	cout<<"please don't try to undo consecutively\n\n";
+	// cout<<"please don't try to undo consecutively\n\n";
+	cout << "maximum 5 undo operations are supported\n";
 	display();
 }
 
@@ -79,6 +94,8 @@ void play :: restart(){
 	if(ch=='y'){
 		score=0;
 		undo_score=0;
+		undo_stack = stack<vector<vector<int> > >();
+		score_stack = stack<int>();
 		initialize();
 	}
 }
@@ -328,13 +345,25 @@ void play :: play_game(){
 
 	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u' || choice=='r')){
 		//make copy of previous move before updating the current matrix to g_copy
-		if(choice!='u'){
-			for(int m=0;m<4;m++){
-				for(int n=0;n<4;n++){
-					g_copy[m][n]=g[m][n];
+		if(choice != 'u'){
+			vector<vector <int> > current_copy;
+			current_copy.resize(4);
+			for(int m = 0;m<4; m++){
+				for(int n=0; n<4; n++){
+					current_copy[m].push_back(g[m][n]);
 				}
 			}
+			undo_stack.push(current_copy);
 		}
+
+		// if(choice!='u'){
+		// 	for(int m=0;m<4;m++){
+		// 		for(int n=0;n<4;n++){
+		// 			g_copy[m][n]=g[m][n];
+		// 		}
+		// 	}
+		// }
+
 	switch(choice){
 		//move up
 		case 'w':
@@ -345,6 +374,7 @@ void play :: play_game(){
 			generate_new_index();
 			system("clear");
 			display();
+			score_stack.push(undo_score);
 			break;
 		//move down
 		case 's':
@@ -355,6 +385,7 @@ void play :: play_game(){
 			generate_new_index();
 			system("clear");
 			display();
+			score_stack.push(undo_score);
 			break;
 		//move left
 		case 'a':
@@ -365,6 +396,7 @@ void play :: play_game(){
 			generate_new_index();
 			system("clear");
 			display();
+			score_stack.push(undo_score);
 			break;
 		//move right
 		case 'd':
@@ -375,6 +407,7 @@ void play :: play_game(){
 			generate_new_index();
 			system("clear");
 			display();
+			score_stack.push(undo_score);
 			break;
 		//quit
 		case 'q':
@@ -395,16 +428,24 @@ void play :: play_game(){
 			break;
 		//undo move
 		case 'u':
-			if(undo_flag<5){
-				for(int m=0;m<4;m++){
-					for(int n=0;n<4;n++){
-						g[m][n]=g_copy[m][n];
+			if(undo_limit < 5){
+				if(!undo_stack.empty()){
+					vector<vector<int> > previous_copy = undo_stack.top();
+					undo_stack.pop();
+					for(int m=0;m<4;m++){
+						for(int n=0;n<4;n++){
+							g[m][n]=previous_copy[m][n];
+						}
 					}
+					// score -= undo_score;
+					score -= score_stack.top();
+					score_stack.pop();
+					undo_limit += 1;
+				}else{
+					system("clear");
+					cout << "\n\nundo not POSSIBLE, reached initial state!!!\n\n";
+					display();
 				}
-				score-=undo_score;
-				undo_flag++;
-				system("clear");
-				display();
 			}else{
 				system("clear");
 				display();
